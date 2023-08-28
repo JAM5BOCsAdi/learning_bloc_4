@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "241261198277",
+    "project_id": "learning-bloc4",
+    "storage_bucket": "learning-bloc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241261198277:android:737f7d67b3f5b142b3a9ac",
+        "android_client_info": {
+          "package_name": "com.example.learning_bloc4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241261198277-qvcml94htoihvmtf1vra3g2n3kle436c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCaJulpq3t6ZqtdpWegs9JALVXKnkVHUg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241261198277-qvcml94htoihvmtf1vra3g2n3kle436c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
