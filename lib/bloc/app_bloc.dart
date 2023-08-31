@@ -10,6 +10,12 @@ import 'package:learning_bloc4/utils/upload_image.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(const AppStateLoggedOut(isLoading: false)) {
+    on<AppEventGoToRegistration>(
+      (event, emit) {
+        emit(const AppStateIsInRegistrationView(isLoading: false));
+      },
+    );
+
     on<AppEventLogIn>(
       (event, emit) async {
         // Loading while you are not logged in.
