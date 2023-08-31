@@ -10,6 +10,86 @@ import 'package:learning_bloc4/utils/upload_image.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(const AppStateLoggedOut(isLoading: false)) {
+    on<AppEventLogIn>(
+      (event, emit) async {
+        // Loading while you are not logged in.
+        emit(const AppStateLoggedOut(isLoading: true));
+        try {
+          final email = event.email;
+          final password = event.password;
+          final userCredential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: email, password: password);
+          final user = userCredential.user!;
+          final images = await _getImages(user.uid);
+          emit(
+            AppStateLoggedIn(
+              user: user,
+              images: images,
+              isLoading: false,
+            ),
+          );
+        } on FirebaseAuthException catch (e) {
+          emit(AppStateLoggedOut(
+              isLoading: false, authError: AuthError.from(e)));
+        }
+      },
+    );
+
+    on<AppEventGoToLogin>(
+      (event, emit) {
+        emit(const AppStateLoggedOut(isLoading: false));
+      },
+    );
+
+    on<AppEventRegister>(
+      (event, emit) async {
+        // Start loading
+        emit(const AppStateIsInRegistrationView(isLoading: true));
+
+        final email = event.email;
+        final password = event.password;
+        try {
+          // Create the user
+          final credentials = await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(email: email, password: password);
+          emit(
+            AppStateLoggedIn(
+              user: credentials.user!,
+              images: const [],
+              isLoading: false,
+            ),
+          );
+        } on FirebaseAuthException catch (e) {
+          emit(
+            AppStateIsInRegistrationView(
+              isLoading: false,
+              authError: AuthError.from(e),
+            ),
+          );
+        }
+      },
+    );
+
+    on<AppEventInitialize>(
+      (event, emit) async {
+        // Get the current user
+        final user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          emit(const AppStateLoggedOut(isLoading: false));
+        } else {
+          // Go grab the user's uploaded images
+          final images = await _getImages(user.uid);
+          emit(
+            AppStateLoggedIn(
+              user: user,
+              images: images,
+              isLoading: false,
+            ),
+          );
+        }
+      },
+    );
+
     // Log Out event
     on<AppEventLogOut>(
       (event, emit) async {

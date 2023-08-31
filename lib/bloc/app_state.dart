@@ -70,7 +70,7 @@ class AppStateLoggedOut extends AppState {
 class AppStateIsInRegistrationView extends AppState {
   const AppStateIsInRegistrationView({
     required bool isLoading,
-    required AuthError? authError,
+    AuthError? authError,
   }) : super(
           isLoading: isLoading,
           authError: authError,
